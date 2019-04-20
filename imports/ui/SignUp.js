@@ -18,8 +18,8 @@ export class SignUp extends React.Component {
     // Create the user and redirect accordingly or update the error state.
     let {email, password} = this.state;
     // Prevent full page refresh with click of Submit button.
-    e.preventDefualt();
-    if (password.length < 9) {
+    e.preventDefault();
+    if (password.length < 8) {
       return this.setState({ error : 'Password must be more than 8 characters long.'})
     }
     this.props.createUser({ email, password }, (err) => {
@@ -27,7 +27,7 @@ export class SignUp extends React.Component {
         this.setState({ error : err.reason});
       } else {
         // User creation was successful, no errors or clear any errors.
-        this.setState({ error : err.reason});
+        this.setState({ error : ''});
       }
     })
   }

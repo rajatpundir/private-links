@@ -12,19 +12,20 @@ export class LogIn extends React.Component {
       email: '',
       password: ''
     };
+    // this.onSubmit = this.onSubmit.bind(this);
   }
-  onSubmit = (e) => {
-    console.log('ihbasoub')
+  onSubmit(e) {
     // Create the user and redirect accordingly or update the error state.
     let {email, password} = this.state;
     // Prevent full page refresh with click of Submit button.
-    e.preventDefualt();
+    e.preventDefault();
     this.props.loginWithPassword({ email }, password, (err) => {
       console.log(err)
       if(err) {
         this.setState({ error : 'Unable to login.'})
       } else {
         // Login was successful, no errors or clear any errors.
+        console.log('Login successful.')
         this.setState({ error : ''})
       }
     });
@@ -42,11 +43,11 @@ export class LogIn extends React.Component {
       // React Component can have only one root element.
       <div>
         <p>LogIn Component</p>
-        {this.state.error ? <p>{this.state.error}</p> : <p>No error</p>}
-        <form onSubmit={this.onSubmit.bind(this)} noValidate className="boxed-view__form">
+        {this.state.error ? <p>{this.state.error}</p> : undefined}
+        <form onSubmit={this.onSubmit.bind(this)} noValidate>
           <input type="email" name="email" placeholder="Email" onChange={this.onEmailChange.bind(this)} value={this.state.email} />
           <input type="password" name="password" placeholder="Password" onChange={this.onPasswordChange.bind(this)} value={this.state.password} />
-          <button className="button">Login</button>
+          <button>Login</button>
         </form>
         <Link to="/signup">Need an account?</Link>
       </div>
