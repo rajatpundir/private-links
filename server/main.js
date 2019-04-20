@@ -1,7 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 
-// Import function for user/email validation.
-// import '../imports/api/users';
+import '../imports/api/users';
+import '../imports/api/links';
+import '../imports/startup/simple-schema-configuration.js';
 
 Meteor.startup(() => {
   // code to run on server at startup

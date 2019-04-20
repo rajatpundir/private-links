@@ -2,9 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { withTracker, createContainer } from 'meteor/react-meteor-data';
-import { Accounts } from 'meteor/accounts-base';
 
-export class SignUp extends React.Component {
+export class LogIn extends React.Component {
   constructor(props) {
     super(props);
     // state - management goes here.
@@ -14,22 +13,21 @@ export class SignUp extends React.Component {
       password: ''
     };
   }
-  onSubmit(e) {
+  onSubmit = (e) => {
+    console.log('ihbasoub')
     // Create the user and redirect accordingly or update the error state.
     let {email, password} = this.state;
     // Prevent full page refresh with click of Submit button.
     e.preventDefualt();
-    if (password.length < 9) {
-      return this.setState({ error : 'Password must be more than 8 characters long.'})
-    }
-    this.props.createUser({ email, password }, (err) => {
+    this.props.loginWithPassword({ email }, password, (err) => {
+      console.log(err)
       if(err) {
-        this.setState({ error : err.reason});
+        this.setState({ error : 'Unable to login.'})
       } else {
-        // User creation was successful, no errors or clear any errors.
-        this.setState({ error : err.reason});
+        // Login was successful, no errors or clear any errors.
+        this.setState({ error : ''})
       }
-    })
+    });
   }
   onEmailChange(e) {
     // Change email state of component
@@ -43,14 +41,14 @@ export class SignUp extends React.Component {
     return(
       // React Component can have only one root element.
       <div>
-        <p>SignUp Component</p>
-        {this.state.error ? <p>{this.state.error}</p> : undefined}
-        <form onSubmit={this.onSubmit.bind(this)} noValidate>
+        <p>LogIn Component</p>
+        {this.state.error ? <p>{this.state.error}</p> : <p>No error</p>}
+        <form onSubmit={this.onSubmit.bind(this)} noValidate className="boxed-view__form">
           <input type="email" name="email" placeholder="Email" onChange={this.onEmailChange.bind(this)} value={this.state.email} />
           <input type="password" name="password" placeholder="Password" onChange={this.onPasswordChange.bind(this)} value={this.state.password} />
-          <button >Create Account</button>
+          <button className="button">Login</button>
         </form>
-        <Link to="/">Have an account?</Link>
+        <Link to="/signup">Need an account?</Link>
       </div>
     );
   }
@@ -61,6 +59,6 @@ export class SignUp extends React.Component {
 // functions that are to be mocked should be passed here as props.
 export default createContainer(() => {
   return {
-    createUser: Accounts.createUser
+    loginWithPassword: Meteor.loginWithPassword
   };
-}, SignUp);
+}, LogIn);
