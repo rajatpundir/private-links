@@ -1,13 +1,11 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
-import { Router, Route, Switch } from 'react-router-dom';
+import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import history from 'history';
 import { Session } from 'meteor/session';
+import { Tracker } from 'meteor/tracker';
 
-// Below commented not working properly, to be dealt with in future.
-// import PrivateRoute from './PrivateRoute';
-// import PublicRoute from './PublicRoute';
-
+// Import Components
 import LogIn from '../ui/LogIn';
 import SignUp from '../ui/SignUp';
 import Dashboard from '../ui/Dashboard';
@@ -15,13 +13,26 @@ import NotFound from '../ui/NotFound';
 
 export const broswerHistory = history.createBrowserHistory()
 
+Tracker.autorun(() => {
+  const isAuthenticated = !!Meteor.userId();
+});
+
+// You may want to refactor public and privates routes as components separately.
 export const AppRouter = () => (
   <Router history={broswerHistory}>
     <Switch>
-      <Route path="/" component={LogIn} exact={true} />
-      <Route path="/signup" component={SignUp} />
-      <Route path="/dashboard" component={Dashboard} exact={true} />
-      <Route path="/dashboard/:id" component={Dashboard} />
+      <Route exact path="/" render={() => (
+        !!Meteor.userId() ? (<Redirect to="/dashboard"/>) : (<LogIn/>)
+      )}/>
+      <Route exact path="/signup" render={() => (
+        !!Meteor.userId() ? (<Redirect to="/dashboard"/>) : (<SignUp/>)
+      )}/>
+      <Route exact path="/dashboard" render={() => (
+        !!Meteor.userId() ? (<Dashboard/>) : (<Redirect to="/"/>)
+      )}/>
+      <Route exact path="/dashboard/:id" render={() => (
+        !!Meteor.userId() ? (<Dashboard/>) : (<Redirect to="/"/>)
+      )}/>
       <Route path="*" component={NotFound} />
     </Switch>
   </Router>
