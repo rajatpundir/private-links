@@ -6,7 +6,7 @@ import { withTracker, createContainer } from 'meteor/react-meteor-data';
 export class LogIn extends React.Component {
   constructor(props) {
     super(props);
-    // state - management goes here.
+    // state management goes here.
     this.state = {
       error: '',
       email: '',
@@ -54,6 +54,10 @@ export class LogIn extends React.Component {
     );
   }
 }
+
+LogIn.propTypes = {
+  loginWithPassword: PropTypes.func.isRequired
+};
 
 // container to wrap the above presentational container.
 // function/data here is tracked and rendered on change.

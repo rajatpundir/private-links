@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import AddLink from './AddLink'
+import LinksList from './LinksList';
 
-export default class App extends React.Component {
+export default class Links extends React.Component {
   constructor(props) {
     super(props);
     // state management goes here.
@@ -9,7 +11,8 @@ export default class App extends React.Component {
   render() {
     return(
       <div>
-        <p>Dummy App Component</p>
+        <AddLink/>
+        <LinksList/>
       </div>
     );
   }

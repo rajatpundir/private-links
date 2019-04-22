@@ -7,7 +7,7 @@ import { Accounts } from 'meteor/accounts-base';
 export class SignUp extends React.Component {
   constructor(props) {
     super(props);
-    // state - management goes here.
+    // state management goes here.
     this.state = {
       error: '',
       email: '',
@@ -55,6 +55,10 @@ export class SignUp extends React.Component {
     );
   }
 }
+
+SignUp.propTypes = {
+  createUser: PropTypes.func.isRequired
+};
 
 // container to wrap the above presentational container.
 // function/data here is tracked and rendered on change.
