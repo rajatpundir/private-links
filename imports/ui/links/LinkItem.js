@@ -10,8 +10,7 @@ export default class LinkItem extends React.Component {
     super(props);
     // state management goes here.
     this.state = {
-      justCopied: false,
-      justDeleted: false
+      justCopied: false
     };
   }
   componentDidMount() {
@@ -27,10 +26,7 @@ export default class LinkItem extends React.Component {
   }
   componentWillUnmount() {
     // Free resources acquired by clipbaord.
-    if(!this.state.justDeleted) {
-      // If the item was removed, this.clipbaord.destroy() will not work.
-      this.clipboard.destroy();
-    }
+    this.clipbaord.listener.destroy();
   }
   renderStats() {
     const visitMessage = this.props.visitedCount === 1 ? 'visit' : 'visits';
@@ -56,7 +52,6 @@ export default class LinkItem extends React.Component {
           {this.props.visible ? 'Hide' : 'Unhide'}
         </button>
         <button onClick={() => {
-          this.state.justDeleted = true;
           Meteor.call('links.remove', this.props._id);
         }}>Delete</button>
       </div>

@@ -20,12 +20,10 @@ export class LogIn extends React.Component {
     // Prevent full page refresh with click of Submit button.
     e.preventDefault();
     this.props.loginWithPassword({ email }, password, (err) => {
-      console.log(err)
       if(err) {
         this.setState({ error : 'Unable to login.'})
       } else {
         // Login was successful, no errors or clear any errors.
-        console.log('Login successful.')
         this.setState({ error : ''})
       }
     });

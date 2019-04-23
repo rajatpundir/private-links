@@ -8,6 +8,8 @@ import { AppRouter, browserHisistory } from '../imports/routes/AppRouter';
 
 Meteor.startup(() => {
   Tracker.autorun(() => {
+    Session.set('selectedNoteId', undefined);
+    Session.set('selectedLinkId', undefined);
     const isAuthenticated = !!Meteor.userId();
     ReactDOM.render(<AppRouter/>, document.getElementById('app'))
   });

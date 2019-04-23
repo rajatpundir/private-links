@@ -3,6 +3,7 @@ import { WebApp } from 'meteor/webapp';
 
 import '../imports/api/users';
 import {Links} from '../imports/api/links';
+import {Notes} from '../imports/api/notes';
 import '../imports/startup/simple-schema-configuration.js';
 
 Meteor.startup(() => {
