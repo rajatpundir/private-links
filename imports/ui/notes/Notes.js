@@ -1,19 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import NoteList from './NoteList';
-import Editor from './Editor';
+import NoteEditor from './NoteEditor';
 
 export default class Notes extends React.Component {
-  constructor(props) {
-    super(props);
-    // state management goes here.
-  }
   render() {
     return(
-      <div>
-        <NoteList/>
-        <Editor/>
+      <div className="page-content">
+        <div  className="page-content__sidebar">
+          <NoteList/>
+        </div>
+        <div  className="page-content__main">
+          <NoteEditor/>
+        </div>
       </div>
     );
   }
-}
+};

@@ -4,7 +4,21 @@ import ReactDOM from 'react-dom';
 import { Meteor } from 'meteor/meteor';
 import { Session } from 'meteor/session';
 import { Tracker } from 'meteor/tracker';
-import { AppRouter, browserHisistory } from '../imports/routes/AppRouter';
+import { AppRouter, browserHistory } from '../imports/routes/AppRouter';
+
+Tracker.autorun(() => {
+  const selectedNoteId = Session.get('selectedNoteId');
+  Session.set('isNavOpen', false);
+  if (selectedNoteId) {
+    browserHistory.replace(`/dashboard/notes/${selectedNoteId}`);
+  }
+});
+
+Tracker.autorun(() => {
+  // Toggles css class based on session variable's value
+  const isNavOpen = Session.get('isNavOpen');
+  document.body.classList.toggle('is-nav-open', isNavOpen);
+});
 
 Meteor.startup(() => {
   Tracker.autorun(() => {

@@ -7,8 +7,11 @@ export default class NotFound extends React.Component {
   }
   render() {
     return(
-      <div>
-        <p>Page Not Found.</p>
+      <div className="boxed-view">
+        <div className="boxed-view__box">
+          <h1>404 - Page Not Found</h1>
+          <p>We're unable to find that page.</p>
+        </div>
       </div>
     );
   }

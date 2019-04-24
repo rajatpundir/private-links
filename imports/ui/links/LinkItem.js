@@ -35,23 +35,23 @@ export default class LinkItem extends React.Component {
       // lastVisitedAt was null intially.
       visitedMessage = `(visited ${ moment (this.props.lastVisitedAt).fromNow() })`;
     }
-    return <p>{this.props.visitedCount} {visitMessage}</p>;
+    return <p className="item__message">{this.props.visitedCount} {visitMessage}</p>;
   }
   render() {
     return(
-      <div>
+      <div className="item">
         <h2>{this.props.url}</h2>
-        <p>{this.props.shortUrl}</p>
+        <p className="item__message">{this.props.shortUrl}</p>
         {this.renderStats()}
-        <a href={this.props.to} target="_blank">Visit</a>
-        <a href={this.props.shortUrl} target="_blank">Indirect</a>
-        <button ref="copy" data-clipboard-text={this.props.shortUrl}> {this.state.justCopied ? 'Copied' : 'Copy'} </button>
-        <button onClick={() => {
+        <a className="button button--pill button--link" href={this.props.url} target="_blank">Visit</a>
+        <a className="button button--pill button--link" href={this.props.shortUrl} target="_blank">Indirect</a>
+        <button className="button button--pill button--link" ref="copy" data-clipboard-text={this.props.shortUrl}> {this.state.justCopied ? 'Copied' : 'Copy'} </button>
+        <button className="button button--pill" onClick={() => {
           Meteor.call('links.setVisibility', this.props._id, !this.props.visible);
         }}>
           {this.props.visible ? 'Hide' : 'Unhide'}
         </button>
-        <button onClick={() => {
+        <button className="button button--pill" onClick={() => {
           Meteor.call('links.remove', this.props._id);
         }}>Delete</button>
       </div>

@@ -28,7 +28,7 @@ Meteor.methods({
       }
     }).validate({ url });
     return Links.insert({
-      to: url,
+      url,
       userId: this.userId,
       visible: true,
       visitedCount: 0,

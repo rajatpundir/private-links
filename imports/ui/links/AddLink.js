@@ -1,4 +1,5 @@
 import React from 'react';
+import Modal from 'react-modal';
 import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 import { withTracker, createContainer } from 'meteor/react-meteor-data';
@@ -9,6 +10,7 @@ export class AddLink extends React.Component {
     // state management goes here.
     this.state = {
       url: '',
+      isOpen: false,
       error: ''
     };
   }
@@ -19,6 +21,7 @@ export class AddLink extends React.Component {
       if(!err) {
         // Close Modal if it was shown.
         this.setState({error : ''});
+        this.handleModalClose();
       } else {
         this.setState({error : err.reason});
       }
@@ -30,15 +33,31 @@ export class AddLink extends React.Component {
       url: e.target.value
     });
   }
+  handleModalClose() {
+    this.setState({
+      isOpen: false,
+      url: '',
+      error: ''
+    });
+  }
   render() {
     return(
       <div>
-        <h1>Add Link</h1>
-        {this.state.error ? <p>{this.state.error}</p> : undefined}
-        <form onSubmit={this.onSubmit.bind(this)}>
-            <input type="text" placeholder="URL" value={this.state.url} onChange={this.onChange.bind(this)}/>
-            <button>Add Link</button>
-        </form>
+        <button className="button" onClick={() => this.setState({isOpen: true})}>+ Add Link</button>
+        <Modal
+          isOpen={this.state.isOpen}
+          contentLabel="Add link"
+          onAfterOpen={() => this.refs.url.focus()}
+          onRequestClose={this.handleModalClose.bind(this)}
+          className="boxed-view__box"
+          overlayClassName="boxed-view boxed-view--modal">
+          <h1>Add Link</h1>
+          {this.state.error ? <p>{this.state.error}</p> : undefined}
+          <form onSubmit={this.onSubmit.bind(this)}  className="boxed-view__form">
+              <input type="text" placeholder="URL" ref="url" value={this.state.url} onChange={this.onChange.bind(this)}/>
+              <button className="button">Add Link</button>
+          </form>
+        </Modal>
       </div>
     );
   }

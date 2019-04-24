@@ -6,16 +6,16 @@ import { Session } from 'meteor/session';
 import { Tracker } from 'meteor/tracker';
 
 // Import Components
-import LogIn from '../ui/LogIn';
-import SignUp from '../ui/SignUp';
-import NotFound from '../ui/NotFound';
+import LogIn from '../ui/generic/LogIn';
+import SignUp from '../ui/generic/SignUp';
+import NotFound from '../ui/generic/NotFound';
 
 import Dashboard from '../ui/Dashboard';
 // Not using below.
 import Links from '../ui/links/Links';
 import Notes from '../ui/notes/Notes';
 
-export const browserHisistory = history.createBrowserHistory()
+export const browserHistory = history.createBrowserHistory()
 
 Tracker.autorun(() => {
   const isAuthenticated = !!Meteor.userId();
@@ -23,7 +23,7 @@ Tracker.autorun(() => {
 
 // You may want to refactor public and privates routes as components separately.
 export const AppRouter = () => (
-  <Router history={browserHisistory}>
+  <Router history={browserHistory}>
     <Switch>
       <Route exact path="/" render={() => (
         !!Meteor.userId() ? (<Redirect to="/dashboard"/>) : (<LogIn/>)
@@ -32,8 +32,8 @@ export const AppRouter = () => (
         !!Meteor.userId() ? (<Redirect to="/dashboard"/>) : (<SignUp/>)
       )}/>
       <Route path="/dashboard" render={() => (
-          !!Meteor.userId() ? (<Dashboard/>) : (<Redirect to="/"/>)
-        )}/>
+        !!Meteor.userId() ? (<Dashboard/>) : (<Redirect to="/"/>)
+      )}/>
       <Route path="*" component={NotFound} />
     </Switch>
   </Router>

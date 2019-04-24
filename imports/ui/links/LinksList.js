@@ -1,4 +1,5 @@
 import React from 'react';
+import FlipMove from 'react-flip-move';
 import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 import { Tracker } from 'meteor/tracker';
@@ -29,8 +30,8 @@ export class LinksList extends React.Component {
   renderLinksListItems() {
     if(this.state.links.length === 0) {
       return (
-        <div>
-          <p>No Links Found</p>
+        <div className="item">
+          <p className="item__status-message">No Links Found</p>
         </div>
       );
     }
@@ -43,7 +44,9 @@ export class LinksList extends React.Component {
   render() {
     return(
       <div>
-        {this.renderLinksListItems()}
+        <FlipMove maintainContainerHeight={true}>
+          {this.renderLinksListItems()}
+        </FlipMove>
       </div>
     );
   }
