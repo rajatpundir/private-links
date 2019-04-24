@@ -7,10 +7,10 @@ export default class Notes extends React.Component {
   render() {
     return(
       <div className="page-content">
-        <div  className="page-content__sidebar">
+        <div className="page-content__sidebar">
           <NoteList/>
         </div>
-        <div  className="page-content__main">
+        <div className="page-content__main">
           <NoteEditor/>
         </div>
       </div>

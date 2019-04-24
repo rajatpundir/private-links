@@ -2,8 +2,10 @@ import React from 'react';
 import FlipMove from 'react-flip-move';
 import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
-import { Tracker } from 'meteor/tracker';
 import { withTracker, createContainer } from 'meteor/react-meteor-data';
+import { Session } from 'meteor/session';
+import { browserHistory } from '../../routes/AppRouter';
+import SimpleSchema from 'simpl-schema';
 
 import { Links } from '../../api/links';
 import LinkItem from './LinkItem';
@@ -11,49 +13,53 @@ import LinkItem from './LinkItem';
 export class LinksList extends React.Component {
   constructor(props) {
     super(props);
-    // state management goes here.
-    this.state = {
-      links: []
-    };
-  }
-  componentDidMount(){
-    this.linksTracker = Tracker.autorun(() => {
-      Meteor.subscribe('links');
-      const links = Links.find({}).fetch();
-      this.setState({ links });
-    });
-  }
-  componentWillUnmount() {
-    // Stop the tracker when component is no longer visible on screen.
-    this.linksTracker.stop();
-  }
-  renderLinksListItems() {
-    if(this.state.links.length === 0) {
-      return (
-        <div className="item">
-          <p className="item__status-message">No Links Found</p>
-        </div>
-      );
-    }
-    return this.state.links.map((link) => {
-      // Meteor.absoluteUrl returns id appended with domain.
-      const shortUrl = Meteor.absoluteUrl(link._id)
-      return <LinkItem key={link._id} shortUrl ={shortUrl} {...link}/>
-    });
   }
   render() {
     return(
-      <div>
+      <div className="item-list">
+        {this.props.links.length === 0 ? <p className="empty-item">Select or create a link to get started!</p> : undefined }
         <FlipMove maintainContainerHeight={true}>
-          {this.renderLinksListItems()}
+          {this.props.links.map((link) => {
+            const shortUrl = Meteor.absoluteUrl(link._id)
+            return<LinkItem key={link._id} shortUrl ={shortUrl} {...link}/>;
+          })}
         </FlipMove>
       </div>
     );
   }
 }
 
+LinksList.propTypes = {
+  links: PropTypes.array.isRequired
+};
+
 export default createContainer(() => {
+  Meteor.subscribe('links');
+  let selectedLinkId = Session.get('selectedLinkId');
+  const linkId = browserHistory.location.pathname.split("/")[3];
+  if(linkId) {
+    new SimpleSchema({
+      linkId: {
+        type: String,
+        min: 1
+      }
+    }).validate({ linkId });
+    if(Links.findOne(linkId)) {
+      Session.set('selectedLinkId', linkId);
+      selectedLinkId = linkId;
+    }
+  }
   return {
-    call: Meteor.call
+    call: Meteor.call,
+    links: Links.find({}, {
+      sort: {
+        updatedAt: -1
+      }
+    }).fetch().map((link) => {
+      return {
+        ...link,
+        selected: link._id === selectedLinkId
+      };
+    })
   };
 }, LinksList);

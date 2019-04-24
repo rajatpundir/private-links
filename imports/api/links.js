@@ -33,7 +33,9 @@ Meteor.methods({
       visible: true,
       visitedCount: 0,
       lastVisitedAt: null,
-      updatedAt: moment().valueOf()
+      updatedAt: moment().valueOf(),
+      title: '',
+      body: ''
     });
   },
 
@@ -98,7 +100,15 @@ Meteor.methods({
         type: String,
         min: 1
       },
-      to: {
+      url: {
+        type: String,
+        optional: true
+      },
+      title: {
+        type: String,
+        optional: true
+      },
+      body: {
         type: String,
         optional: true
       }
@@ -107,7 +117,7 @@ Meteor.methods({
       ...updates
     });
     // Here, Simple schema makes sure only expected args were passed as updates.
-    Notes.update({
+    Links.update({
       _id,
       userId: this.userId
     }, {

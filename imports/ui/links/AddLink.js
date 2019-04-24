@@ -42,14 +42,15 @@ export class AddLink extends React.Component {
   }
   render() {
     return(
-      <div>
-        <button className="button" onClick={() => this.setState({isOpen: true})}>+ Add Link</button>
+      <div className="item-list__header">
+        <button className="button" onClick={() => this.setState({isOpen: true})}>Create Link</button>
         <Modal
           isOpen={this.state.isOpen}
           contentLabel="Add link"
           onAfterOpen={() => this.refs.url.focus()}
           onRequestClose={this.handleModalClose.bind(this)}
           className="boxed-view__box"
+          ariaHideApp={false}
           overlayClassName="boxed-view boxed-view--modal">
           <h1>Add Link</h1>
           {this.state.error ? <p>{this.state.error}</p> : undefined}

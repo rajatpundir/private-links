@@ -22,6 +22,8 @@ export class PrivateHeader extends React.Component {
       }
     }
   }
+  // Put it inside render()
+  //<button className="button button--link-text" onClick={this.toggleMode.bind(this)}>Toggle Mode</button>
   render() {
     const navImageSrc = this.props.isNavOpen ? '/images/x.svg' : '/images/bars.svg';
     return (
@@ -29,7 +31,6 @@ export class PrivateHeader extends React.Component {
         <div  className="header__content">
           <img className="header__nav-toggle" src={navImageSrc} onClick={this.props.handleNavToggle}/>
           <h1 className="header__title">{this.props.title}</h1>
-          <button className="button button--link-text" onClick={this.toggleMode.bind(this)}>Toggle Mode</button>
           <button className="button button--link-text" onClick={() => this.props.handleLogout()}>Logout</button>
         </div>
       </div>

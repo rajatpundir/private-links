@@ -15,6 +15,14 @@ Tracker.autorun(() => {
 });
 
 Tracker.autorun(() => {
+  const selectedLinkId = Session.get('selectedLinkId');
+  Session.set('isNavOpen', false);
+  if (selectedLinkId) {
+    browserHistory.replace(`/dashboard/links/${selectedLinkId}`);
+  }
+});
+
+Tracker.autorun(() => {
   // Toggles css class based on session variable's value
   const isNavOpen = Session.get('isNavOpen');
   document.body.classList.toggle('is-nav-open', isNavOpen);

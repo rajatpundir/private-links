@@ -10,7 +10,6 @@ import { Notes } from '../../api/notes';
 export class NoteEditor extends React.Component {
   constructor(props) {
     super(props);
-    // Probably set state according to the id in session
     this.state = {
       title: '',
       body: ''
@@ -47,7 +46,7 @@ export class NoteEditor extends React.Component {
   render() {
     if (this.props.note) {
       return (
-        <div  className="editor">
+        <div className="editor">
           <input className="editor__title" value={this.state.title} placeholder="Untitled Note" onChange={this.handleTitleChange.bind(this)} />
           <textarea className="editor__body" value={this.state.body} placeholder="Your note here" onChange={this.handleBodyChange.bind(this)}></textarea>
           <div>
@@ -57,8 +56,8 @@ export class NoteEditor extends React.Component {
       );
     } else {
       return (
-        <div  className="editor">
-          <p  className="editor__message">
+        <div className="editor">
+          <p className="editor__message">
             {this.props.selectedNoteId ? 'Note not found.' : 'Pick or create a note to get started.'}
           </p>
         </div>

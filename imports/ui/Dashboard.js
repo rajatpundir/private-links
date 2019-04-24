@@ -18,7 +18,7 @@ export default class Dashboard extends React.Component {
       <div>
         <PrivateHeader title="Dashboard"/>
         <div  className="page-content">
-          {(browserHistory.location.pathname === '/dashboard/links') ? <Links/>: <Notes/>}
+          {(browserHistory.location.pathname.startsWith('/dashboard/links')) ? <Links/>: <Notes/>}
         </div>
       </div>
     );

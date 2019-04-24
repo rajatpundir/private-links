@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import AddLink from './AddLink'
 import LinksList from './LinksList';
+import AddLink from './AddLink';
+import LinkEditor from './LinkEditor';
 
 export default class Links extends React.Component {
   constructor(props) {
@@ -10,9 +11,14 @@ export default class Links extends React.Component {
   }
   render() {
     return(
-      <div>
-        <AddLink/>
-        <LinksList/>
+      <div className="page-content">
+        <div className="page-content__sidebar">
+          <LinksList/>
+        </div>
+        <div className="page-content__main">
+          <AddLink/>
+          <LinkEditor/>
+        </div>
       </div>
     );
   }
