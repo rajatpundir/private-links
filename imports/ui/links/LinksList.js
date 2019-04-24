@@ -18,18 +18,20 @@ export class LinksList extends React.Component {
   }
   render() {
     return(
-      <div>
-        <AddLink/>
-        <LinksListFilter/>
-          <div className="item-list">
-            {this.props.links.length === 0 ? <p className="empty-item">No links found!</p> : undefined }
-            <FlipMove maintainContainerHeight={true}>
-              {this.props.links.map((link) => {
-                const shortUrl = Meteor.absoluteUrl(link._id)
-                return<LinkItem key={link._id} shortUrl ={shortUrl} {...link}/>;
-              })}
-            </FlipMove>
-          </div>
+      <div className="item-list">
+        <div className="item-list__header">
+          <AddLink/>
+          <LinksListFilter/>
+        </div>
+        <div>
+          {this.props.links.length === 0 ? <p className="empty-item">No links found!</p> : undefined }
+          <FlipMove maintainContainerHeight={true}>
+            {this.props.links.map((link) => {
+              const shortUrl = Meteor.absoluteUrl(link._id)
+              return<LinkItem key={link._id} shortUrl ={shortUrl} {...link}/>;
+            })}
+          </FlipMove>
+        </div>
       </div>
     );
   }

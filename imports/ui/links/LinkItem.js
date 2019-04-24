@@ -40,19 +40,21 @@ export class LinkItem extends React.Component {
   }
   render() {
     return(
-      <div className="item item__link" onClick={() => {this.props.Session.set('selectedLinkId', this.props._id);}}>
+      <div className={this.props.selected ? 'item item--selected' : 'item'} onClick={() => {this.props.Session.set('selectedLinkId', this.props._id);}}>
         <h3>{this.props.title}</h3>
         <p className="item__message">{this.props.url}</p>
         {this.renderStats()}
-        <p className="item__subtitle">Last updated at { moment(this.props.updatedAt).format('M/DD/YY') }</p>
-        <a className="button button--pill button--link" href={this.props.shortUrl} target="_blank">Visit</a>
-        {this.props.source === '' ? undefined: <a className="button button--pill button--link" href={this.props.source} target="_blank">Source</a>}
-        <button className="button button--pill button--link" ref="copy" data-clipboard-text={this.props.shortUrl}> {this.state.justCopied ? 'Copied' : 'Copy'} </button>
-        <button className="button button--pill" onClick={() => {
-          Meteor.call('links.setVisibility', this.props._id, !this.props.visible);
-        }}>
-          {this.props.visible ? 'Finish' : 'Unfinish'}
-        </button>
+        <p className="item__subtitle">{ moment(this.props.updatedAt).format('D-MMM-YY h:mm A') }</p>
+        <div className="button__zone">
+          { this.props.url === '' ? undefined : <a className="button button--pill button--link" href={this.props.shortUrl} target="_blank">Visit</a> }
+          { this.props.source === '' ? undefined: <a className="button button--pill button--link" href={this.props.source} target="_blank">Source</a> }
+          <button className="button button--pill button--link" ref="copy" data-clipboard-text={this.props.shortUrl}> {this.state.justCopied ? 'Copied' : 'Copy'} </button>
+          <button className="button button--pill" onClick={() => {
+            Meteor.call('links.setVisibility', this.props._id, !this.props.visible);
+          }}>
+            {this.props.visible ? 'Finish' : 'Unfinish'}
+          </button>
+        </div>
       </div>
     );
   }

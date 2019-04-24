@@ -72,7 +72,7 @@ export class LinkEditor extends React.Component {
           <input className="editor__title" value={this.state.title} placeholder="Title" onChange={this.handleTitleChange.bind(this)} />
           <textarea className="editor__body" value={this.state.context} placeholder="Context" onChange={this.handleContextChange.bind(this)}></textarea>
           <input className="editor__subtitle" value={this.state.source} placeholder="Source" onChange={this.handleSourceChange.bind(this)} />
-          <input className="editor__subtitle" value={this.state.url} placeholder="Goto URL" onChange={this.handleUrlChange.bind(this)} />
+          <input className="editor__subtitle" value={this.state.url} placeholder="Destination" onChange={this.handleUrlChange.bind(this)} />
           <div>
             {this.state.source === '' ? (<button className="button button--secondary" onClick={this.handleRemoval.bind(this)}>Delete Link</button>) : undefined}
           </div>
@@ -82,7 +82,7 @@ export class LinkEditor extends React.Component {
       return (
         <div className="editor">
           <p className="editor__message">
-            {this.props.selectedLinkId ? 'Link not found.' : 'Pick or create a link to get started.'}
+            {this.props.selectedLinkId ? 'Link not found.' : 'Select a link to get started.'}
           </p>
         </div>
       );

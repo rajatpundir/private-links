@@ -5,7 +5,7 @@
   max-width: $site-max-width;
 
   @include desktop {
-    padding: $large-space $space;
+    padding: $large-space/3 $space/2;
   }
 }
 

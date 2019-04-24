@@ -21,5 +21,5 @@ Meteor.startup(() => {
       // let app function normally.
       next();
     }
-  })
+  });
 });

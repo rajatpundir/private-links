@@ -22,8 +22,6 @@ export class PrivateHeader extends React.Component {
       }
     }
   }
-  // Put it inside render()
-  //<button className="button button--link-text" onClick={this.toggleMode.bind(this)}>Toggle Mode</button>
   render() {
     const navImageSrc = this.props.isNavOpen ? '/images/x.svg' : '/images/bars.svg';
     return (
