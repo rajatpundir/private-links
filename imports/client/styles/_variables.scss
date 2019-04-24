@@ -12,7 +12,7 @@ $body-default-font-family: Helvetica, Arial, sans-serif;
 // Spacing
 $space: 1.4rem;
 $large-space: 2.8rem;
-$site-max-width: 100rem;
+$site-max-width: 120rem;
 
 // Font sizes
 $base-font-size: 1.4rem;
@@ -44,6 +44,6 @@ $header-height: 6rem;
 $item-border-width: 4px;
 
 // Page Content
-$page-content-sidebar-width: 30rem;
+$page-content-sidebar-width: 40rem;
 $page-content-main-width: calc(#{$site-max-width} - #{$page-content-sidebar-width});
 $page-content-height: calc(100vh - #{$header-height});

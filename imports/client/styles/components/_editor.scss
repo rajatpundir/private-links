@@ -31,3 +31,11 @@
   margin: $large-space * 2;
   font-style: italic;
 }
+
+.editor__subtitle {
+  border: 1px solid $grey;
+  font-size: $base-font-size * 0.9;
+  margin-bottom: $large-space;
+  outline: none;
+  padding: $input-spacing;
+}

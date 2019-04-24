@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import LinksList from './LinksList';
-import AddLink from './AddLink';
 import LinkEditor from './LinkEditor';
 
 export default class Links extends React.Component {
@@ -16,7 +15,6 @@ export default class Links extends React.Component {
           <LinksList/>
         </div>
         <div className="page-content__main">
-          <AddLink/>
           <LinkEditor/>
         </div>
       </div>

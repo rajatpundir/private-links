@@ -9,6 +9,8 @@ import SimpleSchema from 'simpl-schema';
 
 import { Links } from '../../api/links';
 import LinkItem from './LinkItem';
+import AddLink from './AddLink';
+import LinksListFilter from './LinksListFilter';
 
 export class LinksList extends React.Component {
   constructor(props) {
@@ -16,14 +18,18 @@ export class LinksList extends React.Component {
   }
   render() {
     return(
-      <div className="item-list">
-        {this.props.links.length === 0 ? <p className="empty-item">Select or create a link to get started!</p> : undefined }
-        <FlipMove maintainContainerHeight={true}>
-          {this.props.links.map((link) => {
-            const shortUrl = Meteor.absoluteUrl(link._id)
-            return<LinkItem key={link._id} shortUrl ={shortUrl} {...link}/>;
-          })}
-        </FlipMove>
+      <div>
+        <AddLink/>
+        <LinksListFilter/>
+          <div className="item-list">
+            {this.props.links.length === 0 ? <p className="empty-item">No links found!</p> : undefined }
+            <FlipMove maintainContainerHeight={true}>
+              {this.props.links.map((link) => {
+                const shortUrl = Meteor.absoluteUrl(link._id)
+                return<LinkItem key={link._id} shortUrl ={shortUrl} {...link}/>;
+              })}
+            </FlipMove>
+          </div>
       </div>
     );
   }
@@ -51,7 +57,7 @@ export default createContainer(() => {
   }
   return {
     call: Meteor.call,
-    links: Links.find({}, {
+    links: Links.find({visible: Session.get('showVisible')}, {
       sort: {
         updatedAt: -1
       }

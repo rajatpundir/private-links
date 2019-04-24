@@ -35,7 +35,8 @@ Meteor.methods({
       lastVisitedAt: null,
       updatedAt: moment().valueOf(),
       title: '',
-      body: ''
+      source: '',
+      context: ''
     });
   },
 
@@ -108,7 +109,11 @@ Meteor.methods({
         type: String,
         optional: true
       },
-      body: {
+      source: {
+        type: String,
+        optional: true
+      },
+      context: {
         type: String,
         optional: true
       }

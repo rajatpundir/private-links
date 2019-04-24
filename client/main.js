@@ -32,6 +32,7 @@ Meteor.startup(() => {
   Tracker.autorun(() => {
     Session.set('selectedNoteId', undefined);
     Session.set('selectedLinkId', undefined);
+    Session.set('showVisible', true);
     const isAuthenticated = !!Meteor.userId();
     ReactDOM.render(<AppRouter/>, document.getElementById('app'))
   });

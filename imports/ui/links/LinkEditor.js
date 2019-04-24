@@ -11,13 +11,14 @@ export class LinkEditor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      _id: '',
       url: '',
-      shortUrl: '',
-      visible: '',
+      visible: false,
       visitedCount: '',
       lastVisitedAt: '',
       title: '',
-      body: ''
+      source: '',
+      context: ''
     }
   }
   handleUrlChange(e) {
@@ -30,10 +31,15 @@ export class LinkEditor extends React.Component {
     this.setState({ title });
     this.props.call('links.update', this.props.link._id, { title });
   }
-  handleBodyChange(e) {
-    const body = e.target.value;
-    this.setState({ body });
-    this.props.call('links.update', this.props.link._id, { body });
+  handleSourceChange(e) {
+    const source = e.target.value;
+    this.setState({ source });
+    this.props.call('links.update', this.props.link._id, { source });
+  }
+  handleContextChange(e) {
+    const context = e.target.value;
+    this.setState({ context });
+    this.props.call('links.update', this.props.link._id, { context });
   }
   handleRemoval() {
     this.props.call('links.remove', this.props.link._id);
@@ -48,10 +54,11 @@ export class LinkEditor extends React.Component {
     const prevLinkId = prevProps.link ? prevProps.link._id : undefined;
     if (currentLinkId && currentLinkId !== prevLinkId) {
       this.setState({
+        _id: this.props.link._id,
         url: this.props.link.url,
-        shortUrl: this.props.link.shortUrl,
         title: this.props.link.title,
-        body: this.props.link.body,
+        source: this.props.link.source,
+        context: this.props.link.context,
         visible: this.props.link.visible,
         visitedCount: this.props.link.visitedCount,
         lastVisitedAt: this.props.link.lastVisitedAt
@@ -62,11 +69,12 @@ export class LinkEditor extends React.Component {
     if (this.props.link) {
       return (
         <div className="editor">
-          <input className="editor__title" value={this.state.url} placeholder="Untitled URL" onChange={this.handleUrlChange.bind(this)} />
-          <input className="editor__title" value={this.state.title} placeholder="Untitled Link" onChange={this.handleTitleChange.bind(this)} />
-          <textarea className="editor__body" value={this.state.body} placeholder="Your Link here" onChange={this.handleBodyChange.bind(this)}></textarea>
+          <input className="editor__title" value={this.state.title} placeholder="Title" onChange={this.handleTitleChange.bind(this)} />
+          <textarea className="editor__body" value={this.state.context} placeholder="Context" onChange={this.handleContextChange.bind(this)}></textarea>
+          <input className="editor__subtitle" value={this.state.source} placeholder="Source" onChange={this.handleSourceChange.bind(this)} />
+          <input className="editor__subtitle" value={this.state.url} placeholder="Goto URL" onChange={this.handleUrlChange.bind(this)} />
           <div>
-            <button className="button button--secondary" onClick={this.handleRemoval.bind(this)}>Delete Link</button>
+            {this.state.source === '' ? (<button className="button button--secondary" onClick={this.handleRemoval.bind(this)}>Delete Link</button>) : undefined}
           </div>
         </div>
       );
@@ -93,14 +101,10 @@ LinkEditor.propTypes = {
 // withRouter() will pass updated match, location, and history props to the wrapped component whenever it renders.
 export default withRouter(createContainer(() => {
   const selectedLinkId = Session.get('selectedLinkId');
-  let shortUrl = undefined;
-  if(Links.findOne(selectedLinkId)) {
-    shortUrl = '/dashboard/links' + selectedLinkId;
-  }
+  const link = Links.findOne(selectedLinkId);
   return {
     selectedLinkId,
-    shortUrl,
-    link: Links.findOne(selectedLinkId),
+    link,
     call: Meteor.call,
     Session
   };
