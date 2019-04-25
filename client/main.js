@@ -15,6 +15,14 @@ Tracker.autorun(() => {
 });
 
 Tracker.autorun(() => {
+  const selectedOpenNoteId = Session.get('selectedOpenNoteId');
+  Session.set('isNavOpen', false);
+  if (selectedOpenNoteId) {
+    browserHistory.replace(`/opendashboard/open-notes/${selectedOpenNoteId}`);
+  }
+});
+
+Tracker.autorun(() => {
   const selectedLinkId = Session.get('selectedLinkId');
   Session.set('isNavOpen', false);
   if (selectedLinkId) {
@@ -31,6 +39,7 @@ Tracker.autorun(() => {
 Meteor.startup(() => {
   Tracker.autorun(() => {
     Session.set('selectedNoteId', undefined);
+    Session.set('selectedOpenNoteId', undefined);
     Session.set('selectedLinkId', undefined);
     Session.set('showVisible', true);
     const isAuthenticated = !!Meteor.userId();

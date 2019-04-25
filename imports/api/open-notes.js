@@ -3,46 +3,34 @@ import { Meteor } from 'meteor/meteor';
 import moment from 'moment';
 import SimpleSchema from 'simpl-schema';
 
-export const Notes = new Mongo.Collection('notes');
+export const OpenNotes = new Mongo.Collection('opennotes');
 
 if (Meteor.isServer) {
-  Meteor.publish('notes', function () {
-    return Notes.find({ userId: this.userId });
+  Meteor.publish('open-notes', function () {
+    return OpenNotes.find({});
   });
 }
 
 Meteor.methods({
-
-  'notes.insert'() {
-    if (!this.userId) {
-      throw new Meteor.Error('not-authorized');
-    }
-    return Notes.insert({
+  'open-notes.insert'() {
+    return OpenNotes.insert({
       title: '',
       body: '',
-      userId: this.userId,
       updatedAt: moment().valueOf()
     });
   },
 
-  'notes.remove'(_id) {
-    if (!this.userId) {
-      throw new Meteor.Error('not-authorized');
-    }
+  'open-notes.remove'(_id) {
     new SimpleSchema({
       _id: {
         type: String,
         min: 1
       }
     }).validate({ _id });
-
-    Notes.remove({ _id, userId: this.userId });
+    OpenNotes.remove({ _id });
   },
 
-  'notes.update'(_id, updates) {
-    if (!this.userId) {
-      throw new Meteor.Error('not-authorized');
-    }
+  'open-notes.update'(_id, updates) {
     new SimpleSchema({
       _id: {
         type: String,
@@ -60,9 +48,8 @@ Meteor.methods({
       _id,
       ...updates
     });
-    Notes.update({
-      _id,
-      userId: this.userId
+    OpenNotes.update({
+      _id
     }, {
       $set: {
         updatedAt: moment().valueOf(),

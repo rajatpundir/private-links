@@ -5,23 +5,6 @@ import { Accounts } from 'meteor/accounts-base';
 import { browserHistory } from '../../routes/AppRouter';
 
 export class PrivateHeader extends React.Component {
-  toggleMode() {
-    if(browserHistory.location.pathname.startsWith('/dashboard/links')) {
-      const selectedNoteId = Session.get('selectedNoteId')
-      if(selectedNoteId) {
-        browserHistory.replace('/dashboard/notes/' + selectedNoteId);
-      } else {
-        browserHistory.replace('/dashboard/notes');
-      }
-    } else if(browserHistory.location.pathname.startsWith('/dashboard/notes')) {
-      const selectedLinkId = Session.get('selectedLinkId')
-      if(selectedLinkId) {
-        browserHistory.replace('/dashboard/links/' + selectedLinkId);
-      } else {
-        browserHistory.replace('/dashboard/links');
-      }
-    }
-  }
   render() {
     const navImageSrc = this.props.isNavOpen ? '/images/x.svg' : '/images/bars.svg';
     return (
@@ -47,3 +30,22 @@ export default createContainer(() => {
     isNavOpen: Session.get('isNavOpen')
   };
 }, PrivateHeader);
+
+
+// toggleMode() {
+//   if(browserHistory.location.pathname.startsWith('/dashboard/links')) {
+//     const selectedNoteId = Session.get('selectedNoteId')
+//     if(selectedNoteId) {
+//       browserHistory.replace('/dashboard/notes/' + selectedNoteId);
+//     } else {
+//       browserHistory.replace('/dashboard/notes');
+//     }
+//   } else if(browserHistory.location.pathname.startsWith('/dashboard/notes')) {
+//     const selectedLinkId = Session.get('selectedLinkId')
+//     if(selectedLinkId) {
+//       browserHistory.replace('/dashboard/links/' + selectedLinkId);
+//     } else {
+//       browserHistory.replace('/dashboard/links');
+//     }
+//   }
+// }

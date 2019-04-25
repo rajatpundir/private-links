@@ -8,6 +8,9 @@ export const validateNewUser = (user) => {
   // We validate email format here, if SimplSchema throws error, user will not be created in database.
   const email = user.emails[0].address
   // Validating with
+  if(email !== 'admin@pundir.tech') {
+    return false;
+  }
   new SimpleSchema({
     email: {
       type: String,

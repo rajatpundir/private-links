@@ -11,9 +11,8 @@ import SignUp from '../ui/generic/SignUp';
 import NotFound from '../ui/generic/NotFound';
 
 import Dashboard from '../ui/Dashboard';
-// Not using below.
-import Links from '../ui/links/Links';
-import Notes from '../ui/notes/Notes';
+// Public Components below
+import OpenDashboard from '../ui/public/OpenDashboard';
 
 export const browserHistory = history.createBrowserHistory()
 
@@ -25,16 +24,36 @@ Tracker.autorun(() => {
 export const AppRouter = () => (
   <Router history={browserHistory}>
     <Switch>
-      <Route exact path="/" render={() => (
+      <Route exact path="/secretsignin" render={() => (
         !!Meteor.userId() ? (<Redirect to="/dashboard"/>) : (<LogIn/>)
       )}/>
-      <Route exact path="/signup" render={() => (
+      <Route exact path="/secretsignup" render={() => (
         !!Meteor.userId() ? (<Redirect to="/dashboard"/>) : (<SignUp/>)
       )}/>
       <Route path="/dashboard" render={() => (
         !!Meteor.userId() ? (<Dashboard/>) : (<Redirect to="/"/>)
       )}/>
-      <Route path="*" component={NotFound} />
+      <Route path="/demo-app" render={() => (<Redirect to="/opendashboard"/>)}/>
+      <Route path="/opendashboard" render={() => (<OpenDashboard/>)}/>
     </Switch>
   </Router>
 );
+
+
+// Redundant copy of routes
+// export const AppRouter = () => (
+//   <Router history={browserHistory}>
+//     <Switch>
+//       <Route exact path="/" render={() => (
+//         !!Meteor.userId() ? (<Redirect to="/dashboard"/>) : (<LogIn/>)
+//       )}/>
+//       <Route exact path="/signup" render={() => (
+//         !!Meteor.userId() ? (<Redirect to="/dashboard"/>) : (<SignUp/>)
+//       )}/>
+//       <Route path="/dashboard" render={() => (
+//         !!Meteor.userId() ? (<Dashboard/>) : (<Redirect to="/"/>)
+//       )}/>
+//       <Route path="*" component={NotFound} />
+//     </Switch>
+//   </Router>
+// );
