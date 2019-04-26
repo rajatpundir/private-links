@@ -35,6 +35,7 @@ export const AppRouter = () => (
       )}/>
       <Route path="/demo-app" render={() => (<Redirect to="/opendashboard"/>)}/>
       <Route path="/opendashboard" render={() => (<OpenDashboard/>)}/>
+      <Route path="*" component={NotFound} />
     </Switch>
   </Router>
 );

@@ -23,12 +23,13 @@ Meteor.startup(() => {
     } else {
       // let app function normally but what is normal.
       const entrypoints = [
+        '/',
         '/secretsignin',
-       '/secretsignup',
-       '/demo-app',
-       '/dashboard/links',
-       '/dashboard/notes'
-     ]
+        '/secretsignup',
+        '/demo-app',
+        '/dashboard/links',
+        '/dashboard/notes'
+      ];
       const allowed = (entrypoints.indexOf(req.url) > -1);
       if (allowed || req.url.startsWith('/opendashboard')) {
         if(req.url.startsWith('/dashboard/')) {
