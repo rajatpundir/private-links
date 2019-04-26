@@ -11,6 +11,7 @@ import '../imports/startup/simple-schema-configuration.js';
 Meteor.startup(() => {
   // code to run on server at startup
   // Webhook for redirection.
+  console.log('App running successfully on server.');
   WebApp.connectHandlers.use((req, res, next) => {
     const _id = req.url.slice(1);
     const link = Links.findOne({ _id });
