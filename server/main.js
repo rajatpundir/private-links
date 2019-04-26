@@ -7,7 +7,7 @@ import {Notes} from '../imports/api/notes';
 import {OpenNotes} from '../imports/api/open-notes';
 import '../imports/startup/simple-schema-configuration.js';
 
-// Host it, test it, build bots, conquer.
+// Attach png, host it, test it, build bots, conquer.
 Meteor.startup(() => {
   // code to run on server at startup
   // Webhook for redirection.
@@ -20,7 +20,7 @@ Meteor.startup(() => {
       res.end();
       Meteor.call('links.trackVisit', _id);
     } else {
-      // let app function normally.
+      // let app function normally but what is normal.
       const entrypoints = [
         '/secretsignin',
        '/secretsignup',
@@ -31,7 +31,7 @@ Meteor.startup(() => {
       const allowed = (entrypoints.indexOf(req.url) > -1);
       if (allowed || req.url.startsWith('/opendashboard')) {
         if(req.url.startsWith('/dashboard/')) {
-          setTimeout(() => {next();}, 5000);
+          setTimeout(() => {next();}, 2000);
         } else {
             next();
         }
