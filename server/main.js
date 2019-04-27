@@ -13,6 +13,7 @@ Meteor.startup(() => {
   // Webhook for redirection.
   console.log('App running successfully on server.');
   WebApp.connectHandlers.use((req, res, next) => {
+    console.log(req.headers);
     const _id = req.url.slice(1);
     const link = Links.findOne({ _id });
     if(link) {
