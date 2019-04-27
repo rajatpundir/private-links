@@ -5,6 +5,7 @@ import '../imports/api/users';
 import {Links} from '../imports/api/links';
 import {Notes} from '../imports/api/notes';
 import {OpenNotes} from '../imports/api/open-notes';
+import {IpTracker} from '../imports/api/ip-tracker';
 import '../imports/startup/simple-schema-configuration.js';
 
 // Test it, build bots, conquer.
@@ -13,7 +14,6 @@ Meteor.startup(() => {
   // Webhook for redirection.
   console.log('App running successfully on server.');
   WebApp.connectHandlers.use((req, res, next) => {
-    console.log(req.headers);
     const _id = req.url.slice(1);
     const link = Links.findOne({ _id });
     if(link) {
@@ -21,6 +21,9 @@ Meteor.startup(() => {
       res.setHeader('Location', link.url);
       res.end();
       Meteor.call('links.trackVisit', _id);
+      if(req.headers['x-forwarded-for']) {
+        Meteor.call('ip-tracker.insert', _id, req.headers['x-forwarded-for']);
+      }
     } else {
       // let app function normally but what is normal.
       const entrypoints = [
