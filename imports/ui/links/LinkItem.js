@@ -48,6 +48,7 @@ export class LinkItem extends React.Component {
         <div className="button__zone">
           { this.props.url === '' ? undefined : <a className="button button--pill button--link" href={this.props.shortUrl} target="_blank">Visit</a> }
           { this.props.source === '' ? undefined: <a className="button button--pill button--link" href={this.props.source} target="_blank">Source</a> }
+          { this.props.related === '' ? undefined: <a className="button button--pill button--link" href={this.props.related} target="_blank">Related</a> }
           <button className="button button--pill button--link" ref="copy" data-clipboard-text={this.props.shortUrl}> {this.state.justCopied ? 'Copied' : 'Copy'} </button>
           <button className="button button--pill" onClick={() => {
             Meteor.call('links.setVisibility', this.props._id, !this.props.visible);

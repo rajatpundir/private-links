@@ -36,7 +36,8 @@ Meteor.methods({
       updatedAt: moment().valueOf(),
       title: '',
       source: '',
-      context: ''
+      context: '',
+      related: ''
     });
   },
 
@@ -103,7 +104,8 @@ Meteor.methods({
       },
       url: {
         type: String,
-        optional: true
+        optional: true,
+        regEx: SimpleSchema.RegEx.Url
       },
       title: {
         type: String,
@@ -111,11 +113,17 @@ Meteor.methods({
       },
       source: {
         type: String,
-        optional: true
+        optional: true,
+        regEx: SimpleSchema.RegEx.Url
       },
       context: {
         type: String,
         optional: true
+      },
+      related: {
+        type: String,
+        optional: true,
+        regEx: SimpleSchema.RegEx.Url
       }
     }).validate({
       _id,

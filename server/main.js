@@ -7,7 +7,7 @@ import {Notes} from '../imports/api/notes';
 import {OpenNotes} from '../imports/api/open-notes';
 import '../imports/startup/simple-schema-configuration.js';
 
-// Attach png, host it, test it, build bots, conquer.
+// Test it, build bots, conquer.
 Meteor.startup(() => {
   // code to run on server at startup
   // Webhook for redirection.

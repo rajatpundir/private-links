@@ -18,7 +18,8 @@ export class LinkEditor extends React.Component {
       lastVisitedAt: '',
       title: '',
       source: '',
-      context: ''
+      context: '',
+      related: ''
     }
   }
   handleUrlChange(e) {
@@ -35,6 +36,11 @@ export class LinkEditor extends React.Component {
     const source = e.target.value;
     this.setState({ source });
     this.props.call('links.update', this.props.link._id, { source });
+  }
+  handleRelatedChange(e) {
+    const related = e.target.value;
+    this.setState({ related });
+    this.props.call('links.update', this.props.link._id, { related });
   }
   handleContextChange(e) {
     const context = e.target.value;
@@ -59,6 +65,7 @@ export class LinkEditor extends React.Component {
         title: this.props.link.title,
         source: this.props.link.source,
         context: this.props.link.context,
+        related: this.props.link.related,
         visible: this.props.link.visible,
         visitedCount: this.props.link.visitedCount,
         lastVisitedAt: this.props.link.lastVisitedAt
@@ -72,6 +79,7 @@ export class LinkEditor extends React.Component {
           <input className="editor__title" value={this.state.title} placeholder="Title" onChange={this.handleTitleChange.bind(this)} />
           <textarea className="editor__body" value={this.state.context} placeholder="Context" onChange={this.handleContextChange.bind(this)}></textarea>
           <input className="editor__subtitle" value={this.state.source} placeholder="Source" onChange={this.handleSourceChange.bind(this)} />
+          <input className="editor__subtitle" value={this.state.related} placeholder="Related" onChange={this.handleRelatedChange.bind(this)} />
           <input className="editor__subtitle" value={this.state.url} placeholder="Destination" onChange={this.handleUrlChange.bind(this)} />
           <div>
             {this.state.source === '' ? (<button className="button button--secondary" onClick={this.handleRemoval.bind(this)}>Delete Link</button>) : undefined}
@@ -91,7 +99,7 @@ export class LinkEditor extends React.Component {
 };
 
 LinkEditor.propTypes = {
-  Link: PropTypes.object,
+  link: PropTypes.object,
   selectedLinkId: PropTypes.string,
   call: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
