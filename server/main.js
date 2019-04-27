@@ -21,7 +21,7 @@ Meteor.startup(() => {
       res.setHeader('Location', link.url);
       res.end();
       Meteor.call('links.trackVisit', _id);
-      concole.log('IP', req.headers['x-forwarded-for']);
+      console.log('IP', req.headers['x-forwarded-for']);
       if(req.headers['x-forwarded-for']) {
         Meteor.call('ip-tracker.insert', _id, req.headers['x-forwarded-for']);
       }
